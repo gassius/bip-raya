@@ -1,13 +1,13 @@
 <?php
 /*
-* Plugin Name: Bulk Images to Posts
+* Plugin Name: Bulk Images to Posts (Raya)
 * Plugin URI: http://www.mezzaninegold.com
-* Text Domain: bulk-images-to-posts
+* Text Domain: bulk-images-to-posts-raya
 * Domain Path: /lang
-* Description: Bulk upload images to automatically create posts / custom posts with featured images.
-* Version: 3.6.6.3
-* Author: Mezzanine gold
-* Author URI: http://mezzaninegold.com
+* Description: Adaptation of  Bulk Images to Posts Plugin (http://www.mezzaninegold.com) for Raya.
+* Version: 1.0.0.0 (3.6.6.3)
+* Author: Gassius (Based on work of Mezzanine gold)
+* Author URI: http://carlos.gonzalezri.co
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -15,7 +15,7 @@
 
 add_action('plugins_loaded', 'bip_load_textdomain');
 function bip_load_textdomain() {
-	load_plugin_textdomain( 'bulk-images-to-posts', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+	load_plugin_textdomain( 'bulk-images-to-posts-raya', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 }
 
 
@@ -23,13 +23,13 @@ require_once( 'includes/bip-category-walker.php' );
 require_once( 'includes/bip-settings.php' );
 
 add_action( 'admin_init', 'bip_admin_init' );
- 
+
    function bip_admin_init() {
        /* Register our stylesheet and javascript. */
        wp_register_style( 'bip-css', plugins_url('css/style.css', __FILE__) );
        wp_register_script( 'bip-js', plugins_url('js/script.js', __FILE__), array( 'jquery' ), '', true );
-       wp_register_script( 'dropzone-js', plugins_url('js/dropzone.js', __FILE__), array( 'jquery' ), '', true );     
-   }   
+       wp_register_script( 'dropzone-js', plugins_url('js/dropzone.js', __FILE__), array( 'jquery' ), '', true );
+   }
    function bip_admin_styles() {
        wp_enqueue_style( 'bip-css' );
        wp_enqueue_script( 'bip-js' );
@@ -42,12 +42,12 @@ add_action( 'admin_init', 'bip_admin_init' );
     <div class="notice notice-error error is-dismissible">
         <p><?php _e( 'Bulk Images to Posts','bulk-images-to-posts') ?>: <a href="<?php echo site_url('wp-admin/admin.php?page=bip-settings-page'); ?>"><?php _e('Please update your settings before uploading!', 'bulk-images-to-posts' ); ?></a></p>
     </div>
-  
+
 <?php }
 $bipUpdated = get_option('bip_updated');
 if ( empty($bipUpdated) ) {
 	add_action('admin_notices', 'bip_admin_notice');
-} 
+}
 
 
 // create plugin settings menu
@@ -78,12 +78,12 @@ function bip_create_menu() {
     // enqueue scripts
     add_action( 'admin_print_styles-' . $bip_admin_page, 'bip_admin_styles' );
     add_action( 'admin_print_styles-' . $bip_submenu_page, 'bip_admin_styles' );
-     
+
 }
 
 
 	/*
-	* Register Setting - Needs updating to an array of options. 
+	* Register Setting - Needs updating to an array of options.
 	*/
 function bip_register_settings() {
     register_setting( 'bip-upload-group', 'bip_terms' );
@@ -97,7 +97,7 @@ function bip_register_settings() {
 }
 
 	/*
-	* The main upload page 
+	* The main upload page
 	*/
 function bip_upload_page() { ?>
 
@@ -117,8 +117,8 @@ function bip_upload_page() { ?>
 			<form method="post" action="options.php" id="bip-upload-form">
 			    <?php settings_fields( 'bip-upload-group' ); ?>
 			    <?php do_settings_sections( 'bip-upload-group' ); ?>
-			
-					
+
+
 
 				    <?php
 $selected_taxs = get_option('bip_taxonomy');
@@ -141,7 +141,7 @@ foreach ($selected_taxs as $selected_tax) { ?>
 							    <div class="tabs-panel">
 								    <div class="checkbox-container">
 									    <ul class="categorychecklist ">
-											<?php 
+											<?php
 										    $args = array(
 										    'descendants_and_self'  => 0,
 										    'selected_cats'         => $selected_cats,
