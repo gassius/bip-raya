@@ -1,4 +1,4 @@
-    
+
 <form id="the-drop" method="post" action="#" enctype="multipart/form-data"  >
     <div id="the-dropped" class="dropzone">
         <div class="dz-message">
@@ -10,32 +10,32 @@
               <input type="file" name="bipImage" id="bip_upload"  multiple="true" />
     <input class="btn" id="submit_bip_upload" name="submit_bip_upload" type="submit" value="Upload" />
   </div>
-    
+
     <input type="hidden" name="bipSubmitted" id="bipSubmitted" value="true" />
     <?php wp_nonce_field( 'bip_upload', 'bip_upload_nonce' ); ?>
 </form>
 
-<?php   
-    if ( isset( $_POST['bipSubmitted'] ) 
-    && isset( $_POST['bip_upload_nonce'] ) 
-    && wp_verify_nonce( $_POST['bip_upload_nonce'], 'bip_upload' ) ) { 
-    
+<?php
+    if ( isset( $_POST['bipSubmitted'] )
+    && isset( $_POST['bip_upload_nonce'] )
+    && wp_verify_nonce( $_POST['bip_upload_nonce'], 'bip_upload' ) ) {
+
         // Let WordPress handle the upload.
         // Remember, 'bip_upload' is the name of our file input in our form above.
         // $attachment_id = media_handle_upload( 'bipImage', 0 );
-    
+
         // $attachment = get_post( $attachment_id );
         // $uploadTitleType = get_option('bip_image_title');
         // if ( $uploadTitleType == 0) {
         //     $theoriginaltitle = basename( get_attached_file( $attachment_id ) );
         // } else {
-        //    $theoriginaltitle = $attachment->post_title; 
+        //    $theoriginaltitle = $attachment->post_title;
         //     // Check to see if no title set
         //    if ( empty($theoriginaltitle)) {
         //     $theoriginaltitle = basename( get_attached_file( $attachment_id ) );
         //    }
-        // }        
-        
+        // }
+
         // $titleWithoutExtension = substr($theoriginaltitle, 0, strpos($theoriginaltitle, "."));
         // $thetitle = str_replace("-"," ",$titleWithoutExtension);
         // $uploadPostType = get_option('bip_post_type');
@@ -48,9 +48,9 @@
         $attachment_id = media_handle_upload( 'bipImage', 0 );
 
         $attachment = get_post( $attachment_id );
-        
+
         $uploadTitleType = get_option('bip_image_title');
-        
+
         if ( $uploadTitleType == 0) {
             $theoriginaltitle = basename( get_attached_file( $attachment_id ) );
             $titleWithoutExtension = substr($theoriginaltitle, 0, strpos($theoriginaltitle, "."));
@@ -82,7 +82,7 @@
             $postContent = $image_tag;
         }
 
-   
+
 
         $post_information = array(
             'post_title' => $thetitle,
@@ -90,19 +90,27 @@
             'post_status' => $uploadPostStatus,
             'post_content' => $postContent,
             'tax_input' => $uploadTerms,
-                 
+            'price' => 10,
+            'description' => 'added on post',
+
         );
-        
+
         $the_post_id = wp_insert_post( $post_information );
-    
+
+        // Add The Custom Fields Meta - for Raya
+        add_post_meta($the_post_id, 'price', 0, true);
+        add_post_meta($the_post_id, 'description', '<p>Default description, please adjust</p>', true);
+        add_post_meta($the_post_id, 'iframe', '<iframe style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;" src="'.site_url().'/wp-content/uploads/VR/'.$thetitle.'/'.$thetitle.'.html" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>', true);
+        // End custom code for Raya
+
         // attach media to post
         wp_update_post( array(
             'ID' => $attachment_id,
             'post_parent' => $the_post_id,
         ) );
 
-        set_post_thumbnail( $the_post_id , $attachment_id);
-    
+        //set_post_thumbnail( $the_post_id , $attachment_id);
+
 
         if ( is_wp_error( $attachment_id ) ) {
             _e('There was an error uploading the image.','bulk-images-to-posts');

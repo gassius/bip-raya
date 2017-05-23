@@ -12,6 +12,39 @@
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+/*
+* Adding custom code for Raya
+* Create custom post type
+*/
+
+add_action( 'init', 'bip_raya_custom_post' );
+
+function bip_raya_custom_post() {
+
+register_post_type( 'bulk_products', array(
+  'labels' => array(
+    'name' => 'Bulk Products',
+    'singular_name' => 'Bulk Product',
+   ),
+  'description' => 'Products to be created by Bulk Image drop.',
+  'public' => true,
+  'menu_position' => 20,
+  'supports' => array( 'title', 'custom-fields' )
+));
+}
+
+/* Filter the single_template with our custom function*/
+function get_custom_post_type_template($single_template) {
+     global $post;
+
+     if ($post->post_type == 'bulk_products') {
+          $single_template = dirname( __FILE__ ) . '/single-bulk-products.php';
+     }
+     return $single_template;
+}
+add_filter( 'single_template', 'get_custom_post_type_template' );
+
+// End custom code for Raya
 
 add_action('plugins_loaded', 'bip_load_textdomain');
 function bip_load_textdomain() {

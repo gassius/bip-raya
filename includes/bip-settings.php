@@ -1,7 +1,7 @@
 <?php
 
 function bip_settings_page() { ?>
-	
+
 <div class="grid">
 	<div class="whole unit">
 
@@ -52,27 +52,27 @@ function bip_settings_page() { ?>
 			    <h3 class="hndle"><span><?php _e('Post Content','bulk-images-to-posts'); ?></span></h3>
 			        <div class="inside">
 <?php $includeImageContent = get_option( 'bip_image_content' ); ?>
-   <p>  
+   <p>
    	<label for'bip_image_content'><input type='checkbox' name='bip_image_content' value='1' <?php if ( 1 == $includeImageContent ) echo 'checked="checked"'; ?> />
    <?php _e('Include the image in the body of the post','bulk-images-to-posts'); ?>
 </label>
   </p>
 <p>
-  <?php 
+  <?php
   $imageSizes = get_intermediate_image_sizes(); ?>
   <label for'bip_image_content_size'><?php _e('Image size','bulk-images-to-posts'); ?></label>
 <select name='bip_image_content_size'>
 				                    <option style="font-weight:bold;" value="<?php echo get_option('bip_image_content_size','large'); ?>">
 			                        <?php echo get_option('bip_image_content_size','large'); ?>
 			                    </option>
-  <?php 
+  <?php
   foreach ($imageSizes as $imageSize => $imageSizeName): ?>
     <option value="<?php echo $imageSizeName ?>"><?php echo $imageSizeName; ?></option>
   <?php endforeach; ?>
 </select>
 </p>
 					</div>
-			</div>		   
+			</div>
 			<div class="postbox">
 			    <div title="Click to toggle" class="handlediv"><br></div>
 			    <h3 class="hndle"><span><?php _e('Post Type','bulk-images-to-posts'); ?></span></h3>
@@ -88,14 +88,18 @@ function bip_settings_page() { ?>
 			                        page
 			                    </option>
 			                    <?php $args = array( 'public'   => true, '_builtin' => false );
-			
+
 			                    $output = 'names'; // names or objects, note names is the default
 			                    $operator = 'and'; // 'and' or 'or'
-			
-			                    $post_types = get_post_types( $args, $output, $operator ); 
-			
+
+			                    $post_types = get_post_types( $args, $output, $operator );
+
 			                    foreach ( $post_types  as $post_type ) { ?>
-			                        <option value="<?php echo $post_type ?>">
+			                        <option value="<?php echo $post_type ?>" <?php
+															if ($post_type == 'bulk_products') {
+																echo 'selected="selected"';
+															}
+														 ?>>
 			                           <?php echo $post_type ?>
 			                        </option>
 			                    <?php } ?>
@@ -109,19 +113,19 @@ function bip_settings_page() { ?>
 				                <?php
 				                $taxList = get_option( 'bip_taxonomy' );
 								$args = array(
-								  'public'   => true,			  
+								  'public'   => true,
 								);
 								$output = 'names'; // or objects
 								$operator = 'and'; // 'and' or 'or'
-								$taxonomies = get_taxonomies( $args, $output, $operator ); 
+								$taxonomies = get_taxonomies( $args, $output, $operator );
 								if ( $taxonomies ) {
-								  foreach ( $taxonomies  as $taxonomy ) { ?>	
-								                
-								  <?php if(!empty($taxList)) { $checked = checked( in_array( $taxonomy, $taxList ), true, false ); } ?>		 
+								  foreach ( $taxonomies  as $taxonomy ) { ?>
+
+								  <?php if(!empty($taxList)) { $checked = checked( in_array( $taxonomy, $taxList ), true, false ); } ?>
 								 <label><input type="checkbox" <?php if(!empty($taxList)) { echo $checked; } ?> name="bip_taxonomy[]" value="<?php echo $taxonomy; ?>"><?php echo $taxonomy; ?></label><br/>
 								 <?php  }
 								}
-								?>	                
+								?>
 			    </div>
 			</div>
 			<?php submit_button(); ?>
