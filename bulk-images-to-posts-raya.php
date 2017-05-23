@@ -127,6 +127,7 @@ function bip_register_settings() {
     register_setting( 'bip-settings-group', 'bip_taxonomy' );
     register_setting( 'bip-settings-group', 'bip_image_content' );
     register_setting( 'bip-settings-group', 'bip_image_content_size' );
+    register_setting( 'bip-settings-group', 'bip_image_feature' );
 }
 
 	/*

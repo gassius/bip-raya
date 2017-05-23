@@ -109,7 +109,10 @@
             'post_parent' => $the_post_id,
         ) );
 
-        //set_post_thumbnail( $the_post_id , $attachment_id);
+        $featuredImage = get_option('bip_image_feature');
+        if ($featuredImage == 1) {
+          set_post_thumbnail( $the_post_id , $attachment_id);
+        }
 
 
         if ( is_wp_error( $attachment_id ) ) {

@@ -57,6 +57,14 @@ function bip_settings_page() { ?>
    <?php _e('Include the image in the body of the post','bulk-images-to-posts'); ?>
 </label>
   </p>
+
+	<?php $includeImageFeatured = get_option( 'bip_image_feature' ); ?>
+	   <p>
+	   	<label for'bip_image_feature'><input type='checkbox' name='bip_image_feature' value='1' <?php if ( 1 == $includeImageFeatured ) echo 'checked="checked"'; ?> />
+	   <?php _e('Include the image as featured image','bulk-images-to-posts'); ?>
+	</label>
+	  </p>
+
 <p>
   <?php
   $imageSizes = get_intermediate_image_sizes(); ?>
