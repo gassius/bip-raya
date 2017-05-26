@@ -29,11 +29,29 @@ register_post_type( 'bulk_products', array(
   'description' => 'Products to be created by Bulk Image drop.',
   'public' => true,
   'menu_position' => 20,
-  'supports' => array( 'title', 'custom-fields' )
+  'supports' => array( 'title', 'editor', 'custom-fields' )
 ));
 }
 
-/* Filter the single_template with our custom function*/
+/**ADDS THE LAYOUT EDITOR TO CPT’s*/
+add_filter('avf_builder_boxes','custom_post_types_options');
+
+function custom_post_types_options($boxes)
+{
+  $boxes[] = array( 'title' =>__('Avia Layout Builder','avia_framework' ), 'id'=>'avia_builder', 'page'=>array('post', 'portofolio', 'bulk_products'), 'context'=>'normal', 'expandable'=>true );
+  $boxes[] = array( 'title' =>__('Layout','avia_framework' ), 'id'=>'layout', 'page'=>array('post', 'portofolio', 'bulk_products'), 'context'=>'side', 'priority'=>'low');
+  return $boxes;
+}
+
+/* title to get the post title  */
+function myshortcode_title( ){
+   return get_the_title();
+}
+
+/* Add shortcode */
+add_shortcode('page_title', 'myshortcode_title');
+
+/* Filter the single_template with our custom function
 function get_custom_post_type_template($single_template) {
      global $post;
 
@@ -42,7 +60,7 @@ function get_custom_post_type_template($single_template) {
      }
      return $single_template;
 }
-add_filter( 'single_template', 'get_custom_post_type_template' );
+add_filter( 'single_template', 'get_custom_post_type_template' );*/
 
 // End custom code for Raya
 

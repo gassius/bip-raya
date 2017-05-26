@@ -82,8 +82,6 @@
             $postContent = $image_tag;
         }
 
-
-
         $post_information = array(
             'post_title' => $thetitle,
             'post_type' => $uploadPostType,
