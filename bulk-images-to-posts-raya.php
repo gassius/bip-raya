@@ -38,8 +38,8 @@ add_filter('avf_builder_boxes','custom_post_types_options');
 
 function custom_post_types_options($boxes)
 {
-  $boxes[] = array( 'title' =>__('Avia Layout Builder','avia_framework' ), 'id'=>'avia_builder', 'page'=>array('post', 'portofolio', 'bulk_products'), 'context'=>'normal', 'expandable'=>true );
-  $boxes[] = array( 'title' =>__('Layout','avia_framework' ), 'id'=>'layout', 'page'=>array('post', 'portofolio', 'bulk_products'), 'context'=>'side', 'priority'=>'low');
+  $boxes[] = array( 'title' =>__('Avia Layout Builder','avia_framework' ), 'id'=>'avia_builder', 'page'=>array('post', 'portfolio', 'bulk_products'), 'context'=>'normal', 'expandable'=>true );
+  $boxes[] = array( 'title' =>__('Layout','avia_framework' ), 'id'=>'layout', 'page'=>array('post', 'portfolio', 'bulk_products'), 'context'=>'side', 'priority'=>'low');
   return $boxes;
 }
 
