@@ -98,7 +98,7 @@
         // Add The Custom Fields Meta - for Raya
         add_post_meta($the_post_id, 'price', 0, true);
         add_post_meta($the_post_id, 'description', '<p>Default description, please adjust</p>', true);
-        add_post_meta($the_post_id, 'iframe', '<iframe style="top: 0px; left: 0px; width: 100%; height: 100%; position: absolute;" src="'.site_url().'/wp-content/uploads/VR/'.$thetitle.'/'.$thetitle.'.html" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe>', true);
+        add_post_meta($the_post_id, 'iframe', '<iframe src="'.site_url().'/wp-content/uploads/VR/'.$thetitle.'/'.$thetitle.'.html" frameborder="0" scrolling="no"></iframe>', true);
         // End custom code for Raya
 
         // attach media to post
